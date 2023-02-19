@@ -109,6 +109,8 @@ spec:
 4. Подключиться локально к Service с помощью `kubectl port-forward` и вывести значение (curl или в браузере)
 
 ```shell
+arsen@aurora:/data/12-ansible/12-kuber-2$ kubectl port-forward svc/netology-svc 8086:8080
+
 arsen@aurora:~$ curl -L localhost:8086
 Hostname: netology-web
 Pod Information:
