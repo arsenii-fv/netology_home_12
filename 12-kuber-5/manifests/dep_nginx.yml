@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dep
+ # namespace: dev
+  labels:
+    app: nginxd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginxd
+  template:
+    metadata:
+      labels:
+        app: nginxd
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 808
+          # port: 80
+          name: nginx-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+#  namespace: dev
+spec:
+  selector:
+    app: nginxd
+  ports:
+    - name: nginx-port
+      targetPort: 808
+      port: 9001

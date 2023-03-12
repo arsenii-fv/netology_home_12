@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multy-dep
+  # namespace: dev
+  labels:
+    app: multyd
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: multyd
+  template:
+    metadata:
+      labels:
+        app: multyd
+      
+    spec:
+      # hostNetwork: true
+      # tolerations:
+      # - operator: Exists
+      #   effect: NoSchedule
+      # volumes:
+      # - name: n-m  
+      #   emptyDir: {}
+      containers:
+      - name: network-multitool
+        image: wbitt/network-multitool
+        # env:
+        # - name: HTTP_PORT
+        #   value: "8080"
+        # - name: HTTPS_PORT
+        #   value: "11443"
+        ports:
+        - containerPort: 8080
+          name: http-port
+          # port: 9002
+        - containerPort: 11443
+          name: https-port
+          # port: 12443
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
+        # securityContext:
+        #   runAsUser: 0
+        #   capabilities:
+        #     add: ["NET_ADMIN"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: multy-svc
+ # namespace: dev
+spec:
+  selector:
+    app: multyd
+  ports:
+    - name: http-port
+      targetPort: 8080
+      port: 9002   
+    #protocol: TCP
+    # imagePullPolicy: IfNotPresent
+
