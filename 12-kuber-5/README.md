@@ -31,6 +31,7 @@
 4. Продемонстрировать, что приложения видят друг друга с помощью Service.
 5. Предоставить манифесты Deployment'а и Service в решении, а также скриншоты или вывод команды п.4.
 
+```bash
 arsen@aurora:/data/12-ansible/12-kuber-5$ kubectl get pods -o wide
 NAME                         READY   STATUS    RESTARTS       AGE     IP            NODE      NOMINATED NODE   READINESS GATES
 nginx-dep-75fb8b6d8d-f5vtf   1/1     Running   1 (136m ago)   7d20h   10.1.154.31   atman-v   <none>           <none>
@@ -74,7 +75,7 @@ arsen@aurora:/data/12-ansible/12-kuber-5$ kubectl exec network-multitool-ds9gf -
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0WBITT Network MultiTool (with NGINX) - multy-dep-798dbd8b49-nf9n9 - 10.1.154.35 - HTTP: 8080 , HTTPS: 11443 . (Formerly praqma/network-multitool)
 100   146  100   146    0     0    735      0 --:--:-- --:--:-- --:--:--  142k
-
+```
 ------
 
 ### Задание 2. Создать Ingress и обеспечить доступ к приложениям снаружи кластера
