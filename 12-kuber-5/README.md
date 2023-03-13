@@ -81,6 +81,26 @@ arsen@aurora:/data/12-ansible/12-kuber-5$ kubectl exec network-multitool-ds9gf -
 ### Задание 2. Создать Ingress и обеспечить доступ к приложениям снаружи кластера
 
 1. Включить Ingress-controller в microk8s
+```bash
+arsen@aurora:/data/12-ansible/12-kuber-5$ kubectl describe ing 
+Name:             ingress-nginx-multy
+Labels:           <none>
+Namespace:        default
+Address:          127.0.0.1
+Ingress Class:    public
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /      nginx-svc:9001 (10.1.154.17:8087,10.1.154.50:8087,10.1.154.57:8087)
+              /api   multy-svc:9002 (10.1.154.25:8088)
+Annotations:  <none>
+Events:
+  Type    Reason  Age                From                      Message
+  ----    ------  ----               ----                      -------
+  Normal  Sync    18s (x7 over 22h)  nginx-ingress-controller  Scheduled for sync
+```
 2. Создать Ingress, обеспечивающий доступ снаружи по IP-адресу кластера microk8s, так чтобы при запросе только по адресу открывался _frontend_ а при добавлении /api - _backend_
 3. Продемонстрировать доступ с помощью браузера или `curl` с локального компьютера
 4. Предоставить манифесты, а также скриншоты или вывод команды п.2

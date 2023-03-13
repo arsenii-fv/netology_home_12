@@ -32,7 +32,7 @@ spec:
         # - name: HTTPS_PORT
         #   value: "11443"
         ports:
-        - containerPort: 8080
+        - containerPort: 8088
           name: http-port
           # port: 9002
         - containerPort: 11443
@@ -61,7 +61,7 @@ spec:
     app: multyd
   ports:
     - name: http-port
-      targetPort: 8080
+      targetPort: 8088
       port: 9002   
     #protocol: TCP
     # imagePullPolicy: IfNotPresent
