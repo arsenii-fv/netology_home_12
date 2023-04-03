@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: busy-multyt-ds
+  labels:
+    app: busym-d
+spec:
+  selector:
+    matchLabels:
+      app: busym-d
+  template:
+    metadata:
+      labels:
+        app: busym-d
+    spec:
+      containers:  
+      - name: network-multitool
+        image: wbitt/network-multitool
+        ports:
+        - containerPort: 1180
+          name: http-port
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
+        volumeMounts:
+          - mountPath: "/tmp/var/syslog_host"
+            name: varlog
+#
+      volumes:
+        - name: varlog
+          hostPath:
+            path: /var/log/syslog
+#
