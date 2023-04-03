@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: multy-dep
-  # namespace: dev
   labels:
     app: multyd
 spec:
@@ -26,18 +25,16 @@ spec:
       containers:
       - name: network-multitool
         image: wbitt/network-multitool
-        # env:
-        # - name: HTTP_PORT
-        #   value: "8080"
-        # - name: HTTPS_PORT
-        #   value: "11443"
+        env:
+        - name: HTTP_PORT
+          value: "1180"
+        - name: HTTPS_PORT
+          value: "11443"
         ports:
-        - containerPort: 8088
+        - containerPort: 1180
           name: http-port
-          # port: 9002
         - containerPort: 11443
           name: https-port
-          # port: 12443
         resources:
           requests:
             cpu: "1m"
@@ -55,14 +52,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: multy-svc
- # namespace: dev
 spec:
   selector:
     app: multyd
   ports:
     - name: http-port
-      targetPort: 8088
-      port: 9002   
+      targetPort: 1180
+      port: 9002     
     #protocol: TCP
-    # imagePullPolicy: IfNotPresent
-
+  #type: NodePort 
+  type: ClusterIP

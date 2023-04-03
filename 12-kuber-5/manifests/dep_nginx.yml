@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-dep
- # namespace: dev
+  # namespace: ingress
   labels:
     app: nginxd
 spec:
@@ -19,19 +19,35 @@ spec:
       - name: nginx
         image: nginx:1.14.2
         ports:
-        #- containerPort: 8087
-        - port: 8087
+        - containerPort: 80
+        #- port: 8080
           name: nginx-port
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx-svc
-#  namespace: dev
+  # namespace: ingress
 spec:
   selector:
     app: nginxd
   ports:
     - name: nginx-port
-      targetPort: 8087
+      targetPort: 80
       port: 9001
+  #type: NodePort
+  type: ClusterIP
+  
+
+# ---
+# kind: ConfigMap
+# apiVersion: v1
+# metadata:
+#   name: nginx-config
+#   #namespace: nginx-ingress
+# data:
+#   proxy-connect-timeout: "10s"
+#   proxy-read-timeout: "10s"
+#   client-max-body-size: "2m"
+#   external-status-address: "192.168.1.4"

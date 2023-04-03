@@ -81,28 +81,56 @@ arsen@aurora:/data/12-ansible/12-kuber-5$ kubectl exec network-multitool-ds9gf -
 ### Задание 2. Создать Ingress и обеспечить доступ к приложениям снаружи кластера
 
 1. Включить Ingress-controller в microk8s
+2. Создать Ingress, обеспечивающий доступ снаружи по IP-адресу кластера microk8s, так чтобы при запросе только по адресу открывался _frontend_ а при добавлении /api - _backend_
+3. Продемонстрировать доступ с помощью браузера или `curl` с локального компьютера
+
 ```bash
-arsen@aurora:/data/12-ansible/12-kuber-5$ kubectl describe ing 
-Name:             ingress-nginx-multy
-Labels:           <none>
+arsen@aurora:/data/12-ansible/12-kuber-5$ kubectl describe ing
+Name:             nginx-ingress-microk8s
+Labels:           app=nginx-ingress-microk8s
 Namespace:        default
-Address:          127.0.0.1
-Ingress Class:    public
+Address:          192.168.1.3
+Ingress Class:    nginx
 Default backend:  <default>
 Rules:
   Host        Path  Backends
   ----        ----  --------
-  *           
-              /      nginx-svc:9001 (10.1.154.17:8087,10.1.154.50:8087,10.1.154.57:8087)
-              /api   multy-svc:9002 (10.1.154.25:8088)
-Annotations:  <none>
-Events:
-  Type    Reason  Age                From                      Message
-  ----    ------  ----               ----                      -------
-  Normal  Sync    18s (x7 over 22h)  nginx-ingress-controller  Scheduled for sync
+  atman-v     
+              /      nginx-svc:9001 (10.1.154.32:80,10.1.154.33:80,10.1.154.34:80)
+              /api   multy-svc:9002 (10.1.154.31:1180)
+Annotations:  nginx.ingress.kubernetes.io/rewrite-target: /$1
+Events:       <none>
+
+arsen@aurora:/data/12-ansible/12-kuber-5$ curl -L atman-v/
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+arsen@aurora:/data/12-ansible/12-kuber-5$ curl -L atman-v/api
+WBITT Network MultiTool (with NGINX) - multy-dep-c89dcc49c-4chxx - 10.1.154.31 - HTTP: 1180 , HTTPS: 11443 . (Formerly praqma/network-multitool)
 ```
-2. Создать Ingress, обеспечивающий доступ снаружи по IP-адресу кластера microk8s, так чтобы при запросе только по адресу открывался _frontend_ а при добавлении /api - _backend_
-3. Продемонстрировать доступ с помощью браузера или `curl` с локального компьютера
 4. Предоставить манифесты, а также скриншоты или вывод команды п.2
 
 ------
@@ -114,3 +142,7 @@ Events:
 3. Репозиторий должен содержать тексты манифестов или ссылки на них в файле README.md
 
 ------
+```
+ kubectl describe ds nginx-ingress-microk8s-controller -n ingress
+ kubectl edit daemonset nginx-ingress-microk8s-controller -n ingress
+```
