@@ -34,7 +34,7 @@
 3. Продемонстрировать, что multitool может читать файл, в который busybox пишет каждые пять секунд в общей директории. 
 4. Продемонстрировать, что файл сохранился на локальном диске ноды, а также что произойдёт с файлом после удаления пода и deployment. Пояснить, почему.
 5. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
-
+```bash
 arsen@aurora:/data/12-ansible/13-kuber-2$ kubectl exec busy-multyt-dep-5f49648466-56kmn -c network-multitool -it -- sh
 / # cd /tmp/svf/
 /tmp/svf # ls
@@ -62,7 +62,6 @@ date.d
 21:32:56
 21:33:00
 21:33:01
-
 
 arsen@aurora:/data/12-ansible/13-kuber-2$ ssh arsen@192.168.1.3
 arsen@192.168.1.3's password: 
@@ -111,7 +110,7 @@ arsen@atman-v:/tmp/svf$ cat date.d
 21:32:25
 21:32:26
 21:32:30
-21:32:31
+21::32:31
 21:32:35
 21:32:36
 21:32:40
@@ -121,6 +120,7 @@ arsen@atman-v:/tmp/svf$ cat date.d
 По истечении 30 секунд после удаления подов, данные в файл прекращают сохраняться.
 default          busy-multyt-dep-5f49648466-56kmn           2/2     Terminating   0               12m
 default          busy-multyt-dep-5f49648466-gt9dk           2/2     Terminating   0               12m
+```
 ------
 
 ### Задание 2
@@ -133,7 +133,7 @@ default          busy-multyt-dep-5f49648466-gt9dk           2/2     Terminating 
 2. Создать Deployment приложения состоящего из multitool, и подключить к нему PV, созданный автоматически на сервере NFS.
 3. Продемонстрировать возможность чтения и записи файла изнутри пода. 
 4. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
-
+```bash
 arsen@aurora:/data/12-ansible/13-kuber-2$ kubectl get pod
 NAME                          READY   STATUS    RESTARTS   AGE
 multyt-dep-65557758cd-l2rw7   1/1     Running   0          10s
@@ -163,8 +163,7 @@ drwxr-xr-x 2 nobody nogroup 4096 Apr  3 07:47 .
 drwxrwxrwx 3 nobody nogroup 4096 Apr  3 07:47 ..
 -rw-r--r-- 1 nobody nogroup    9 Apr  3 07:46 file
 -rw-r--r-- 1 nobody nogroup   13 Apr  3 07:47 file2
-
-
+```
 ------
 
 ### Правила приёма работы
