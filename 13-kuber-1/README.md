@@ -97,6 +97,7 @@ date.d
 3. Продемонстрировать возможность чтения файла изнутри пода.
 4. Предоставить манифесты Deployment, а также скриншоты или вывод команды из п. 2.
 
+```bash
 arsen@aurora:/data/12-ansible/13-kuber-1$ kubectl get pods
 NAME                         READY   STATUS    RESTARTS        AGE
 nginx-dep-75fb8b6d8d-qcl8n   1/1     Running   1 (3h30m ago)   19h
@@ -113,7 +114,7 @@ syslog_host
 /tmp/var # tail -2 syslog_host 
 Mar 31 10:39:12 atman-v microk8s.daemon-kubelite[994034]: I0331 10:39:12.851935  994034 scope.go:115] "RemoveContainer" containerID="56418cf3c99fb02e67cc42cabd6671cd694a89b02a1255ac6bb1675828c94b9b"
 Mar 31 10:39:12 atman-v microk8s.daemon-kubelite[994034]: E0331 10:39:12.852193  994034 pod_workers.go:965] "Error syncing pod, skipping" err="failed to \"StartContainer\" for \"speaker\" with CrashLoopBackOff: \"back-off 5m0s restarting failed container=speaker pod=speaker-k7dx7_metallb-system(f092d0fe-7696-426c-ab29-48edba713fd6)\"" pod="metallb-system/speaker-k7dx7" podUID=f092d0fe-7696-426c-ab29-48edba713fd6
-
+```
 
 ------
 
