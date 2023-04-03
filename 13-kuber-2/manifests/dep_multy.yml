@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multyt-dep
+  labels:
+    app: multy-d
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: multy-d
+  template:
+    metadata:
+      labels:
+        app: multy-d
+    spec:
+      containers:
+      - name: network-multitool
+        image: wbitt/network-multitool
+        # env:
+        # - name: HTTP_PORT
+        #   value: "1180"
+        # - name: HTTPS_PORT
+        #   value: "11443"
+        ports:
+        - containerPort: 1180
+          name: http-port
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
+        volumeMounts:
+          - mountPath: "/tmp/nfs"
+            name: new-volume
+            #              
+      volumes:
+        - name: new-volume
+          persistentVolumeClaim:
+            claimName: my-pvc
+       

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busy-multyt-dep
+  labels:
+    app: busym-d
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: busym-d
+  template:
+    metadata:
+      labels:
+        app: busym-d
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: 
+        args:
+          - "/bin/sh"
+          - "-c"
+          - "while true;do date +%H:%M:%S >> /tmp/svf/date.d;sleep 5;done"
+        volumeMounts:
+          - mountPath: "/tmp/svf"
+            name: new-volume     
+
+      - name: network-multitool
+        image: wbitt/network-multitool
+        # env:
+        # - name: HTTP_PORT
+        #   value: "1180"
+        # - name: HTTPS_PORT
+        #   value: "11443"
+        ports:
+        - containerPort: 1180
+          name: http-port
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "20Mi"
+          limits:
+            cpu: "10m"
+            memory: "20Mi"
+        volumeMounts:
+          - mountPath: "/tmp/svf"
+            name: new-volume
+            #              
+      volumes:
+        - name: new-volume
+          persistentVolumeClaim:
+            claimName: pvc-nm
+       
