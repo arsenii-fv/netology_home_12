@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-nginx-ingress
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - atman-v
+    secretName: secret-ng
+  rules:
+  - host: "atman-v"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: nginx-svc
+              port:
+                number: 8080

@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-multy-deployment
+  labels:
+    app: nginx-multy
+spec:
+  replicas: 2
+  
+  selector:
+    matchLabels:
+      app: nginx-multy
+  template:
+    metadata:
+      labels:
+        app: nginx-multy
+      
+    spec:
+      # hostNetwork: true
+      # tolerations:
+      # - operator: Exists
+      #   effect: NoSchedule
+      # volumes:
+      # - name: n-m  
+      #   emptyDir: {}
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          # volumeMounts:
+          # - name: n-m
+          #   mountPath: /usr/share/nginx/html
+          ports:
+          - containerPort: 80
+        # imagePullPolicy: Never
+          volumeMounts:
+            - name: conf-map
+              mountPath: /var/share/nginx/html/index.html
+              subPath: index.html
+            - name: conf-map
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+  #  
+        - name: network-multitool
+          image: wbitt/network-multitool
+          env:
+            - name: HTTP_PORT 
+              valueFrom:
+                configMapKeyRef:
+                  name: config-http-port
+                  key: http_port
+            - name: HTTPS_PORT 
+              valueFrom:
+                configMapKeyRef:
+                  name: config-http-port
+                  key: https_port    
+          ports:
+          - containerPort: 1180
+            name: http-port
+          - containerPort: 11443
+            name: https-port
+          resources:
+            requests:
+              cpu: "1m"
+              memory: "20Mi"
+            limits:
+              cpu: "10m"
+              memory: "20Mi"
+          # volumeMounts:
+          # - name: conf-map
+          #   mountPath: /tmp/configmap
+            # readOnly: true
+        # securityContext:
+        #   runAsUser: 0
+        #   capabilities:
+        #     add: ["NET_ADMIN"]
+      volumes:
+        - name: conf-map
+          configMap:
+            name: config-http-port
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: netology-svc1
+#  namespace: default
+spec:
+  selector:
+    app: nginx-multy
+  ports:
+  - name: service-port
+    targetPort: 80 # echoserver-web
+    port: 80
+    #protocol: TCP
+    # imagePullPolicy: IfNotPresent

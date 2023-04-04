@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx-d
+spec:
+  replicas: 2
+  
+  selector:
+    matchLabels:
+      app: nginx-d
+  template:
+    metadata:
+      labels:
+        app: nginx-d
+      
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          # volumeMounts:
+          # - name: n-m
+          #   mountPath: /usr/share/nginx/html
+          ports:
+          - containerPort: 80
+        # imagePullPolicy: Never
+          volumeMounts:
+            - name: conf-map
+              mountPath: /var/share/nginx/html/index.html
+              subPath: index.html
+            - name: conf-map
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: conf-map
+          configMap:
+            name: config-http-port
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+#  namespace: default
+spec:
+  selector:
+    app: nginx-d
+  ports:
+  - name: service-port
+    targetPort: 80 # echoserver-web
+    port: 8080
+    #protocol: TCP
+    # imagePullPolicy: IfNotPresent
