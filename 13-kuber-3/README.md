@@ -75,7 +75,7 @@ curl failed to verify the legitimacy of the server and therefore could not
 establish a secure connection to it. To learn more about this situation and
 how to fix it, please visit the web page mentioned above.
 ```
-![png/Nginx_tls.png](My_site)
+!(/png/Nginx_tls.png)[My_site]
 ------
 
 ### Правила приема работы
