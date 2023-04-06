@@ -40,12 +40,6 @@ WBITT Network MultiTool (with NGINX) - network-multitool - 10.1.154.40 - HTTP: 1
 Replacing default HTTP port (80) with the value specified by the user - (HTTP_PORT: 1180).
 Replacing default HTTPS port (443) with the value specified by the user - (HTTPS_PORT: 11443).
 
-arsen@aurora:/data/12-ansible/13-kuber-4$ kubectl logs network-multitool -n alien
-The directory /usr/share/nginx/html is not mounted.
-Therefore, over-writing the default index.html file with some useful information:
-WBITT Network MultiTool (with NGINX) - network-multitool - 10.1.154.40 - HTTP: 1180 , HTTPS: 11443 . (Formerly praqma/network-multitool)
-Replacing default HTTP port (80) with the value specified by the user - (HTTP_PORT: 1180).
-Replacing default HTTPS port (443) with the value specified by the user - (HTTPS_PORT: 11443).
 arsen@aurora:/data/12-ansible/13-kuber-4$ kubectl describe network-multitool -n alien
 error: the server doesn't have a resource type "network-multitool"
 arsen@aurora:/data/12-ansible/13-kuber-4$ kubectl describe pod network-multitool -n alien
