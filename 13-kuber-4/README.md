@@ -41,7 +41,7 @@ Replacing default HTTP port (80) with the value specified by the user - (HTTP_PO
 Replacing default HTTPS port (443) with the value specified by the user - (HTTPS_PORT: 11443).
 
 arsen@aurora:/data/12-ansible/13-kuber-4$ kubectl describe network-multitool -n alien
-error: the server doesn't have a resource type "network-multitool"
+error: "the server doesn't have a resource type "network-multitool""
 arsen@aurora:/data/12-ansible/13-kuber-4$ kubectl describe pod network-multitool -n alien
 Name:             network-multitool
 Namespace:        alien
