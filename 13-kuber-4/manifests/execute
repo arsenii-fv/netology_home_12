@@ -1,0 +1,13 @@
+openssl genrsa -out guest.key 2048
+openssl req -new -key guest.key -out guest.csr # /CN=guest
+
+openssl x509 -req -in guest.csr -CA ~/.microk8s/ca1.crt -CAkey ~/.microk8s/ca1.key -CAcreateserial -out guest.crt -days 500
+
+kubectl config set-credentials guest --client-certificate=guest.crt --client-key=guest.key
+
+kubectl config set-context guest-con --cluster=microk8s-cluster --user=guest
+
+kubectl config view
+
+kubectl config use-context guest-con
+kubectl config use-context microk8s
