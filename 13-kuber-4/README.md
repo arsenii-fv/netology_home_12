@@ -29,7 +29,7 @@
 3. Создать Роли и все необходимые настройки для пользователя
 4. Предусмотреть права пользователя. Пользователь может просматривать логи подов и их конфигурацию (`kubectl logs pod <pod_id>`, `kubectl describe pod <pod_id>`)
 5. Предоставить манифесты, а также скриншоты и/или вывод необходимых команд.
-
+```bash
 arsen@aurora:/data/12-ansible/13-kuber-4$ kubectl config use-context guest-con
 Switched to context "guest-con".
 
@@ -109,7 +109,7 @@ Error from server (Forbidden): pods is forbidden: User "guest" cannot list resou
 arsen@aurora:/data/12-ansible/13-kuber-4$ kubectl get pods -n alien
 NAME                READY   STATUS    RESTARTS   AGE
 network-multitool   1/1     Running   0          9h
-
+```
 ------
 
 ### Правила приема работы
