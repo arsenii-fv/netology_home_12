@@ -57,6 +57,67 @@ app2             release-name-sky-chart-2-0                  1/1     Running    
 app2             release-name-sky-chart-2-1                  1/1     Running     0                4s
 app2             release-name-sky-chart-2-test-connection    0/1     Completed   0                5s
 ```
+```bash
+arsen@aurora:/data/12-ansible/13-kuber-5$ kubectl describe pod release-name-sky-chart-2-test-connection -n app2
+Name:             release-name-sky-chart-2-test-connection
+Namespace:        app2
+Priority:         0
+Service Account:  default
+Node:             atman-v/192.168.1.3
+Start Time:       Fri, 07 Apr 2023 11:58:41 +0300
+Labels:           app.kubernetes.io/instance=release-name
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=sky-chart-2
+                  app.kubernetes.io/version=1.19.5
+                  helm.sh/chart=sky-chart-2-0.1.2
+Annotations:      cni.projectcalico.org/containerID: e41292cb1b756293d080231d1351dfad68d880b90e4c10986373ea797fa99e8e
+                  cni.projectcalico.org/podIP: 
+                  cni.projectcalico.org/podIPs: 
+                  helm.sh/hook: test
+Status:           Succeeded
+IP:               10.1.154.35
+IPs:
+  IP:  10.1.154.35
+Containers:
+  wget:
+    Container ID:  containerd://619299beba5b5db7ac9068d0da44b3a3d5a967c783ce18dedc6301e69bd70528
+    Image:         busybox
+    Image ID:      docker.io/library/busybox@sha256:b5d6fe0712636ceb7430189de28819e195e8966372edfc2d9409d79402a0dc16
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      wget
+    Args:
+      release-name-sky-chart-2:80
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Fri, 07 Apr 2023 11:58:43 +0300
+      Finished:     Fri, 07 Apr 2023 11:58:44 +0300
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-d8l4l (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-d8l4l:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+```
 
 ### Правила приема работы
 
