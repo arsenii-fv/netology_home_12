@@ -1,0 +1,4 @@
+kubectl config get-contexts
+
+helm create sky-chart
+helm template sky-chart > sky1_nginx.yml
