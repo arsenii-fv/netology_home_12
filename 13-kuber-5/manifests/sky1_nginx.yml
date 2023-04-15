@@ -45,7 +45,7 @@ metadata:
     app.kubernetes.io/version: "1.19.0"
     app.kubernetes.io/managed-by: Helm
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app.kubernetes.io/name: sky-chart-1
@@ -79,24 +79,3 @@ spec:
               port: http
           resources:
             {}
----
-# Source: sky-chart-1/templates/tests/test-connection.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: "release-name-sky-chart-1-test-connection"
-  labels:
-    helm.sh/chart: sky-chart-1-0.1.1
-    app.kubernetes.io/name: sky-chart-1
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.19.0"
-    app.kubernetes.io/managed-by: Helm
-  annotations:
-    "helm.sh/hook": test
-spec:
-  containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
-      args: ['release-name-sky-chart-1:80']
-  restartPolicy: Never
